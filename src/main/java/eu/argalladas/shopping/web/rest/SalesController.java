@@ -30,9 +30,9 @@ public class SalesController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Not found element in this search")
     })
-    public ResponseEntity<SalesDTO> getSales(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @ApiParam(name = "date", value = "Date to search", defaultValue = "2020-06-14T00:00:00") LocalDateTime date,
-                                                     @RequestParam("productId") @ApiParam(name = "productId", value = "ProductId to search", defaultValue = "35455") Long productId,
-                                                     @RequestParam("brandId") @ApiParam(name = "brandId", value = "brandId to search", defaultValue = "1") Long brandId) {
+    public ResponseEntity<SalesDTO> getSales(@RequestParam(value = "date", required=true) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @ApiParam(name = "date", value = "Date to search", defaultValue = "2020-06-14T00:00:00") LocalDateTime date,
+                                                     @RequestParam(value = "productId", required=true) @ApiParam(name = "productId", value = "ProductId to search", defaultValue = "35455") Long productId,
+                                                     @RequestParam(value = "brandId", required=true) @ApiParam(name = "brandId", value = "brandId to search", defaultValue = "1") Long brandId) {
 
         Optional<SalesDTO> sale = salesService.findSale(date, productId, brandId); // productService.getProducts(startDate);
         if (!sale.isPresent()) {

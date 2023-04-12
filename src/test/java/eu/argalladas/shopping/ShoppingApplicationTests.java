@@ -102,6 +102,21 @@ public class ShoppingApplicationTests {
 
 	}
 
+	@Test
+	public void testNotRequiredParams() throws Exception {
+		String date = "2023-06-16T21:00:00";
+		String product = "35455";
+		String brand = "1";
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+		ResponseEntity<SalesDTO> response = restTemplate.exchange(
+				new URI(String.format("http://localhost:%s/api/sales", port)), HttpMethod.GET, entity, SalesDTO.class);
+		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+	}
+
 	public void genericTest(String date, String product, String brand, String startDate, String endDate, Double price, Long priceList) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
