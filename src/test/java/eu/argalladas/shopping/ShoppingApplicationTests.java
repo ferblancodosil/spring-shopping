@@ -86,6 +86,22 @@ public class ShoppingApplicationTests {
 		genericTest(date, product, brand, startDate, endDate, price, priceList);
 	}
 
+	@Test
+	public void test404() throws Exception {
+		String date = "2023-06-16T21:00:00";
+		String product = "35455";
+		String brand = "1";
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+		ResponseEntity<SalesDTO> response = restTemplate.exchange(
+				new URI(String.format("http://localhost:%s/api/sales?date=%s&productId=%s&brandId=%s", port, date, product, brand)), HttpMethod.GET, entity, SalesDTO.class);
+
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+	}
+
 	public void genericTest(String date, String product, String brand, String startDate, String endDate, Double price, Long priceList) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
